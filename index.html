@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="robots" content="noindex">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Escalada</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap">
+  <link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+  <main class="palco" id="palco">
+    <canvas id="cv" aria-hidden="true"></canvas>
+    <canvas id="fx" aria-hidden="true"></canvas>
+    <p class="sem-3d" id="fail" hidden>O cenário 3D não carregou. Dá pra jogar mesmo assim.</p>
+
+    <div class="hud" id="hud" hidden>
+      <div class="pilula"><small>ALTITUDE</small><span id="h-alt">0 m</span></div>
+      <div class="rodadas" id="h-rodadas" aria-hidden="true"></div>
+      <div class="pilula direita"><small>PONTOS</small><span id="h-pts">0</span></div>
+    </div>
+
+    <section class="tela tela-inicio" id="tela-inicio">
+      <h1>Escalada</h1>
+      <p class="dia" id="i-dia">Carregando…</p>
+      <p class="regras">7 perguntas. 25 segundos cada. Quanto mais rara a resposta, mais alto você sobe.</p>
+      <ul class="legenda" id="i-legenda"></ul>
+      <p class="erro-carga" id="i-erro" hidden></p>
+      <button class="botao principal" id="b-comecar" disabled>Começar a subida</button>
+    </section>
+
+    <section class="tela tela-rodada" id="tela-rodada" hidden>
+      <div class="cartao" id="cartao">
+        <small id="r-num"></small>
+        <h2 id="r-texto"></h2>
+        <p class="previa" id="r-previa">O relógio começa em <b id="r-contagem">3</b></p>
+        <form id="r-form" autocomplete="off" hidden>
+          <div class="barra" aria-hidden="true"><i id="r-barra"></i></div>
+          <div class="linha">
+            <span class="tempo" id="r-tempo">25</span>
+            <input id="r-input" maxlength="80" placeholder="Sua resposta" aria-label="Sua resposta" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="send">
+            <button class="botao" id="r-botao" type="submit">Subir</button>
+          </div>
+          <p class="erro" id="r-erro" aria-live="polite"></p>
+        </form>
+      </div>
+
+      <div class="feedback" id="feedback" hidden>
+        <strong id="f-tier"></strong>
+        <p class="f-resposta" id="f-resposta"></p>
+        <p class="f-pontos" id="f-pontos"></p>
+        <p class="f-frase" id="f-frase"></p>
+        <button class="botao principal" id="f-proxima" hidden></button>
+      </div>
+    </section>
+
+    <section class="tela tela-fim" id="tela-fim" hidden>
+      <div class="fim-dobra">
+        <header class="fim-topo">
+          <small id="fim-dia"></small>
+          <p class="fim-altura"><span id="fim-metros">0</span><i>m</i></p>
+          <p class="fim-faixa"><span id="fim-faixa"></span></p>
+          <p class="fim-placar"><b id="fim-pontos">0</b> pontos</p>
+        </header>
+        <div class="fim-folha fim-painel-placar">
+          <div class="comparacao" id="fim-comparacao" data-estado="carregando">
+            <p class="comparacao-titulo" id="fim-melhor" aria-live="polite">Comparando com quem subiu hoje…</p>
+            <div class="curva" id="fim-curva-caixa" aria-hidden="true">
+              <svg id="fim-curva" preserveAspectRatio="none"></svg>
+              <span class="curva-voce" id="fim-voce">você</span>
+            </div>
+            <div class="curva-escala" aria-hidden="true"><span>0</span><span id="fim-jogadores"></span><span id="fim-teto"></span></div>
+          </div>
+          <div class="fim-acoes">
+            <button class="botao principal" id="b-compartilhar">Copiar resultado</button>
+            <p class="fim-relogio">Nova montanha em<b id="fim-relogio">--:--:--</b></p>
+          </div>
+        </div>
+      </div>
+      <div class="fim-folha fim-painel-via">
+        <h2 class="fim-via">Sua via <small>7 trechos</small></h2>
+        <ol class="fim-lista" id="fim-lista"></ol>
+        <div class="fim-teste" id="fim-teste" hidden>
+          <small>MODO TESTE</small>
+          <div class="linha-teste">
+            <button class="botao" id="b-repetir">Jogar este dia de novo</button>
+            <button class="botao" id="b-proximo">Testar o próximo dia</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="vendor/three.min.js"></script>
+  <script src="montanha.js"></script>
+  <script src="escalada.js"></script>
+  <script src="regras.js"></script>
+  <script src="api-local.js"></script>
+  <script src="jogo.js"></script>
+</body>
+</html>
